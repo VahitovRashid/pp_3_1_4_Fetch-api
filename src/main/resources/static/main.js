@@ -74,6 +74,7 @@ const FormRoles = document.getElementById("addUserRoles");
 
 addUserForm.addEventListener('submit', (e) => {
     e.preventDefault();
+    output = '';
     fetch(urlAdd, {
         method: 'POST',
         headers: {
@@ -88,10 +89,9 @@ addUserForm.addEventListener('submit', (e) => {
             roles: getRolesFromAddUserForm()
         })
     })
-        .then(() => {
-            usersTableNavLink.click();
-            location.reload();
-        })
+    .then(res => res.json())
+    .then(data => renderUser(data))
+    usersTableNavLink.click();
 })
 
 //edit
@@ -159,7 +159,6 @@ if (editButtonIsPressed) {
             editUserLastName.value = user.lastName;
             editUserAge.value = user.age;
             editUserEmail.value = user.email;
-            editUserPassword.value = user.password;
 
             let editRoles = user.roles.map(role => role.name)
             editRoles.forEach(
@@ -176,6 +175,7 @@ if (editButtonIsPressed) {
 
     // Method: PUT
     modalEditSubmitBtn.addEventListener("click", e => {
+        output = '';
         e.preventDefault();
         let user = {
             id: editUserId.value,
@@ -193,10 +193,9 @@ if (editButtonIsPressed) {
             },
             body: JSON.stringify(user)
         })
-            .then(() => {
-                usersTableNavLink.click();
-                location.reload();
-            })
+        .then(res => res.json())
+        .then(data => renderUser(data))
+        usersTableNavLink.click();
     })
 }
 
@@ -234,7 +233,6 @@ if (delButtonIsPressed) {
             deleteUserLastName.value = user.lastName;
             deleteUserAge.value = user.age;
             deleteUserEmail.value = user.email;
-            deleteUserPassword.value = user.password;
 
             let editRoles = user.roles.map(role => role.name)
             editRoles.forEach(
@@ -251,13 +249,14 @@ if (delButtonIsPressed) {
 
     // Method: DELETE
     modalDeleteSubmitBtn.addEventListener("click", e => {
+        output = '';
         e.preventDefault();
         fetch(`${url}/${currentUserId}`, {
             method: 'DELETE',
         })
-            .then(res => res.json());
+        .then(res => res.json())
+        .then(data => renderUser(data))
         usersTableNavLink.click();
-        location.reload();
     })
 }
 })

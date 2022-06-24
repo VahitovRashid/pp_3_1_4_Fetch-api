@@ -35,9 +35,10 @@ public class RestAdminController {
 
 
     @PostMapping(value = "/add")
-    public void saveUser(@RequestBody User user) {
+    public List<User> saveUser(@RequestBody User user) {
         user.setRoles(roleService.getSetRoles(user.getRoles()));
         userService.saveUser(user);
+        return userService.findAll();
     }
 
     @GetMapping(value = "/{id}")
@@ -46,13 +47,15 @@ public class RestAdminController {
     }
 
     @PutMapping(value = "/")
-    public void updateUser(@RequestBody User user) {
+    public List<User> updateUser(@RequestBody User user) {
         user.setRoles(roleService.getSetRoles(user.getRoles()));
         userService.saveUser(user);
+        return userService.findAll();
     }
 
     @DeleteMapping(value = "/{id}")
-    public void deleteUser(@PathVariable ("id") Long id) {
+    public List<User> deleteUser(@PathVariable ("id") Long id) {
         userService.deleteById(id);
+        return userService.findAll();
     }
 }

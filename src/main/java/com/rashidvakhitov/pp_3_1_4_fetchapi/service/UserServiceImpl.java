@@ -29,7 +29,7 @@ public class UserServiceImpl implements UserService {
     }
 
     public User findById(Long id) {
-        return userRepository.findById(id).get();
+        return userRepository.findById(id).orElseThrow(()-> new RuntimeException("User not found"));
     }
 
     public User saveUser(User user) {
@@ -38,24 +38,13 @@ public class UserServiceImpl implements UserService {
     }
 
     public void deleteById(Long id) {
-        userRepository.deleteById(id);
+        User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
+        userRepository.delete(user);
     }
 
     @Override
     public User findUserByName(String name) {
         return userRepository.getUser(name);
-    }
-
-    @Override
-    public User updateUser(User user, Long id) {
-        User updtuser = findById(id);
-        updtuser.setName(user.getName());
-        updtuser.setLastName(user.getLastName());
-        updtuser.setAge(user.getAge());
-        updtuser.setEmail(user.getEmail());
-        updtuser.setPassword(user.getPassword());
-        updtuser.setRoles(user.getRoles());
-        return updtuser;
     }
 
 }
