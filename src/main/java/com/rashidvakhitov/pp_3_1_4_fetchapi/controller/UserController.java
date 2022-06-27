@@ -6,10 +6,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 
 @Controller
-@RequestMapping("/user")
+@RequestMapping("/")
 public class UserController {
 
-    @GetMapping
+    @GetMapping("/")
+    public String index() {
+        return "redirect:/login";
+    }
+
+    @GetMapping("/user")
     public String userPage() {
         return "user";
     }

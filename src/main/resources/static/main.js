@@ -14,7 +14,7 @@ const renderUser = (users) => {
             <td> ${user.id} </td>
             <td> ${user.name} </td>
             <td> ${user.lastName} </td>
-            <td> ${user.username} </td>
+            <td> ${user.age} </td>
             <td> ${user.email} </td>
             <td> ${user.roles.map((role) => role.name === "ROLE_USER" ? " USER" : " ADMIN")} </td>
             <td> <button type="button" class="btn btn-success" id="btn-edit-modal-call" data-toggle="modal" data-target="modal-edit"
